@@ -9,9 +9,10 @@
 % this with ESingleLayer_PeaksNewtonCG
 
 clear;
+rng(2)
 
 %% get peaks data
-np = 4000;  % num of points sampled
+np = 1000;  % num of points sampled
 nc = 5;     % num of classes
 ns = 256;   % length of grid
 

@@ -8,7 +8,8 @@
 %
 
 clear all;
-[Y,C]    = setupPeaks();
+rng(2)
+[Y,C]    = setupPeaks(1000);
 fig      = figure(1); 
 fig.Name = 'exResNet_Peaks: True function';
 

@@ -91,7 +91,7 @@ for j=1:param.maxIter
         end
         mu = mu/2;
         cnt = cnt+1;
-        if cnt > 10
+        if cnt > 20
             warning('Line search break');
             return;
         end

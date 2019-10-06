@@ -8,7 +8,7 @@
 % network
 close all; clear all; clc;
 
-rng(20)
+rng(2)
 n  = 50; nf = 50; nc = 3; m  = 40;
 Wtrue = randn(nc,m+1);
 Ktrue = randn(m,nf);

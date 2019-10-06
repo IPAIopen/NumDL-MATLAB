@@ -11,8 +11,9 @@
 % ESingleLayer_PeaksVarPro
 %
 clear;
+rng(2)
 %% get peaks data
-np = 4000;  % num of points sampled
+np = 1000;  % num of points sampled
 nc = 5;     % num of classes
 ns = 256;   % length of grid
 
@@ -34,9 +35,9 @@ paramSL = struct('act',@sinActivation);
 fctn = @(x,varargin) singleLayerNNObjFun(x,Y,C,m,paramSL,paramReg);
 x0   = [K0(:); b0(:); W0(:)];
 
-param.lr = 1e-1*ones(50,1);
+param.lr = 1e0*ones(50,1);
     param.n  = size(Y,2);
-    param.batchSize = 4;
+    param.batchSize = 2;
     param.momentum=0.0;
     
 xOpt = sgd(fctn,x0,param);

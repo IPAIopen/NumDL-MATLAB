@@ -7,7 +7,7 @@
 % Example: Extreme learning for Peaks example
 %
 close all; clear all; clc;
-
+rng(42)
 %% get peaks data
 np = 8000;  % num of points sampled
 nc = 5;     % num of classes
@@ -16,7 +16,7 @@ ns = 256;   % length of grid
 [Y, C] = setupPeaks(np, nc, ns);
 
 numTrain = size(Y, 2)*0.80;
-idx = randperm(numTrain);
+idx = randperm(size(Y,2));
 idxTrain = idx(1:numTrain);
 idxValid = idx(numTrain+1:end);
 
@@ -32,7 +32,7 @@ nf = size(Y,1);
 nc = size(C,1);
 %% optimize
 % m = 640/20;
-m = 300;
+m = 200;
 KOpt = randn(m,nf);
 bOpt = randn(1);
 W0   = randn(nc,m+1);

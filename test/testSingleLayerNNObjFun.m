@@ -43,7 +43,7 @@ legend('E0','E1');
 
 % run steepest descent
 F = @(x) singleLayerNNObjFun(x,Y,Cobs,m);
-param = struct('maxIter',1000,'maxStep',1);
+param = struct('maxIter',2000,'maxStep',1);
 xSol = steepestDescent(F,x0,param);
 
 Ksol = reshape(xSol(1:nf*m),m,nf);

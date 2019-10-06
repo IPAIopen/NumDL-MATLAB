@@ -22,9 +22,13 @@
 %  H   - approximate Hessian
 %
 function [J,dJ,H] =  classObjFun(W,Z,C,paramRegW,varargin)
+loss = @softMax;
+for k=1:2:length(varargin)    % overwrites default parameter
+  eval([varargin{k},'=varargin{',int2str(k+1),'};']);
+end;
 
 
-[J,dJ,H] = softMax(W,Z,C);
+[J,dJ,H] = loss(W,Z,C);
 
 if exist('paramRegW','var') && isstruct(paramRegW)
     [Sc,dS,d2S] = genTikhonov(W,paramRegW);
