@@ -9,12 +9,12 @@
 % used to illustrate feature engineering.
 %
 close all; clear all; clc;
-
+rng(42)
 %% get peaks data
 
 [Y, C] = setupEllipses(1000);
 
-% % normalize
+% %{ % normalize
 % Y = Y - mean(Y,2);
 % Y = Y./std(Y,[],2);
 
@@ -27,13 +27,13 @@ close all; clear all; clc;
 figure(1); clf;
 col1 = [0 0.44 0.75];
 col2 = [0.85 0.32 0.1];
-p1 = plot(Y(1,C==1),Y(2,C==1),'.','MarkerSize',10);
+p1 = plot(Y(1,C==1),Y(2,C==1),'x','MarkerSize',10);
 p1.Color=col1;
 hold on
 p2 = plot(Y(1,C==0),Y(2,C==0),'.','MarkerSize',10);
 p2.Color=col2;
 axis equal tight
-
+colorbar
 
 %% split into training and validation
 
@@ -69,29 +69,32 @@ hvalid = Svalid>0;
 trainErr = 100*nnz(abs(CTrain-htrain))/2/nnz(CTrain);
 valErr   = 100*nnz(abs(CValid-hvalid))/2/nnz(CValid);
 %%
-x = linspace(-2.5,2.5,201);
-[Xg,Yg] = ndgrid(x);
+x = linspace(min(Y(1,:)),max(Y(1,:)),201);
+y = linspace(min(Y(2,:)),max(Y(2,:)),101);
+[Xg,Yg] = ndgrid(x,y);
 S = WOpt * padarray([vec(Xg)'; vec(Yg)'],[1,0],1,'post');
 posInd = (S>0);
-negInd = (0 >= S);
+negInd = (S <= 0);
 P = 0*S;
 P(posInd) = 1./(1+exp(-S(posInd)));
 P(negInd) = exp(S(negInd))./(1+exp(S(negInd)));
 Cpred = P > 0.5;
 img = reshape(Cpred,size(Xg));
 %%
-col1 = [0 0.44 0.75];
-col2 = [0.85 0.32 0.1];
 figure(2);clf;
-ih = imagesc(x,x,img')
+ih = imagesc(x,y,img')
 ih.AlphaData = .5
-colormap([col1;col2]);
+colormap([col2;col1]);
+ colorbar
 hold on;
 p1 = plot(YTrain(1,CTrain==1),YTrain(2,CTrain==1),'.','MarkerSize',10);
 p1.Color=col1;
+% plot(YTrain(1,Cpred==1),YTrain(2,Cpred==1),'o','MarkerSize',10);
+
 p2 = plot(YTrain(1,CTrain==0),YTrain(2,CTrain==0),'.','MarkerSize',10);
 p2.Color=col2;
+axis equal tight
 title(sprintf('train  error %1.2f%% val error %1.2f%%',trainErr,valErr));
-
+set(gca,'FontSize',20)
 
 

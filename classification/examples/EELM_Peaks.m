@@ -97,6 +97,10 @@ for k=1:numel(acts)
     imagesc(x,x,img')
     title(sprintf('%s - train %1.2f%% val %1.2f%%',func2str(act),trainErr,valErr));    
 end
-
+%%
+for k=1:4
+    subplot(2,2,k)
+    set(gca,'FontSize',20)
+end
 
 
